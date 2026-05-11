@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}My Decks — AI Vocabulary Coach{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-8">
+  <h1 class="text-3xl font-bold text-slate-900">My Decks</h1>
+</div>
+
+{% if user and user.onboarding_complete %}
+<!-- Generate new deck form -->
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-8">
+  <h2 class="font-semibold text-lg mb-4">Generate a New Deck</h2>
+  <form hx-post="/api/decks/generate"
+        hx-target="#deck-list"
+        hx-swap="afterbegin"
+        hx-indicator="#spinner"
+        class="flex gap-3 items-end flex-wrap">
+    <div class="flex-1 min-w-48">
+      <label class="text-sm font-medium text-slate-600 mb-1 block">Topic</label>
+      <input type="text" name="topic" placeholder="e.g. travel, food, business…" required
+             class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+    </div>
+    <div>
+      <label class="text-sm font-medium text-slate-600 mb-1 block">Cards</label>
+      <select name="count"
+              class="border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </div>
+    <button type="submit"
+            class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors">
+      Generate
+    </button>
+    <span id="spinner" class="htmx-indicator text-sm text-slate-500">Generating…</span>
+  </form>
+</div>
+{% else %}
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-sm text-amber-700">
+  Complete your
+  <a href="/onboarding" class="font-semibold underline">onboarding</a>
+  first to generate flashcard decks.
+</div>
+{% endif %}
+
+<div id="deck-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  {% for deck in decks %}
+    {% include "decks/partials/deck_card.html" %}
+  {% else %}
+  <div class="col-span-full text-center text-slate-400 py-16">
+    No decks yet. Generate your first one above!
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

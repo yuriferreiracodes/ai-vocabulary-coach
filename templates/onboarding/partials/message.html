@@ -1,0 +1,21 @@
+<!-- User message -->
+<div class="flex gap-3 justify-end">
+  <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-sm text-sm">
+    {{ user_message }}
+  </div>
+  <div class="w-8 h-8 rounded-full bg-indigo-200 flex items-center justify-center flex-shrink-0 text-sm">👤</div>
+</div>
+
+<!-- AI reply -->
+<div class="flex gap-3">
+  <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0 text-sm">🤖</div>
+  <div class="bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 max-w-sm text-sm text-slate-700">
+    {{ ai_reply }}
+  </div>
+</div>
+
+{% if onboarding_complete %}
+<div hx-trigger="load" hx-swap="none"
+     hx-on::load="document.body.dispatchEvent(new Event('onboarding:complete'))">
+</div>
+{% endif %}

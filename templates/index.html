@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}AI Vocabulary Coach — Learn Any Language{% endblock %}
+
+{% block content %}
+<div class="text-center py-20">
+  <h1 class="text-5xl font-extrabold text-slate-900 mb-4">
+    Learn vocabulary <span class="text-indigo-600">the smart way</span>
+  </h1>
+  <p class="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
+    Chat with our AI coach to set up your personalized learning profile, then get AI-generated flashcard decks tailored to your goals.
+  </p>
+
+  {% if user and user.onboarding_complete %}
+  <div class="flex gap-4 justify-center">
+    <a href="/decks"
+       class="bg-indigo-600 text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-indigo-700 transition-colors">
+      My Decks
+    </a>
+    <a href="/decks"
+       class="border border-indigo-200 text-indigo-600 px-8 py-3 rounded-xl text-lg font-semibold hover:bg-indigo-50 transition-colors">
+      Generate New Deck
+    </a>
+  </div>
+  {% else %}
+  <a href="/onboarding"
+     class="inline-block bg-indigo-600 text-white px-10 py-4 rounded-xl text-lg font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+    Start Learning — It's Free
+  </a>
+  {% endif %}
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <div class="text-3xl mb-3">💬</div>
+    <h3 class="font-bold text-lg mb-2">Conversational Onboarding</h3>
+    <p class="text-slate-500 text-sm">Tell our AI what you want to learn. It adapts to your level and goals through natural conversation.</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <div class="text-3xl mb-3">🃏</div>
+    <h3 class="font-bold text-lg mb-2">AI-Generated Flashcards</h3>
+    <p class="text-slate-500 text-sm">Get custom vocabulary decks for any topic — travel, business, culture, or anything you choose.</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <div class="text-3xl mb-3">🧠</div>
+    <h3 class="font-bold text-lg mb-2">Spaced Repetition</h3>
+    <p class="text-slate-500 text-sm">Our SM-2 algorithm schedules reviews at the perfect time so you never forget what you've learned.</p>
+  </div>
+</div>
+{% endblock %}

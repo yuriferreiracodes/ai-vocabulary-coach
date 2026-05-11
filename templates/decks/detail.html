@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{{ deck.title }} — AI Vocabulary Coach{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+  <a href="/decks" class="text-sm text-slate-400 hover:text-indigo-600">← Back to Decks</a>
+  <h1 class="text-3xl font-bold text-slate-900 mt-2">{{ deck.title }}</h1>
+  {% if deck.description %}
+  <p class="text-slate-500 mt-1">{{ deck.description }}</p>
+  {% endif %}
+</div>
+
+<div class="flex gap-4 text-sm text-slate-500 mb-8">
+  <span>{{ deck.flashcards | length }} total cards</span>
+  <span>{{ due_cards | length }} due for review</span>
+</div>
+
+{% if due_cards %}
+<div class="mb-8">
+  <h2 class="font-semibold text-lg mb-4">Due for Review</h2>
+  <div id="review-cards" class="space-y-4">
+    {% for card in due_cards %}
+      {% include "decks/partials/flashcard.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div>
+  <h2 class="font-semibold text-lg mb-4">All Cards</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {% for card in deck.flashcards %}
+    <div class="bg-white rounded-xl border border-slate-200 p-4">
+      <p class="font-semibold text-slate-800">{{ card.front }}</p>
+      <p class="text-slate-500 text-sm mt-1">{{ card.back }}</p>
+      {% if card.example_sentence %}
+      <p class="text-xs text-slate-400 mt-2 italic">{{ card.example_sentence }}</p>
+      {% endif %}
+      {% if card.pronunciation %}
+      <p class="text-xs text-indigo-400 mt-1">{{ card.pronunciation }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
